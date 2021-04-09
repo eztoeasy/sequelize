@@ -3,10 +3,15 @@ const nunjucks = require('nunjucks');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
+const db = require('./models');
+
 class App {
 
     constructor () {
         this.app = express();
+
+        // db 접속
+        this.dbConnection();
 
         // 뷰엔진 셋팅
         this.setViewEngine();
@@ -30,6 +35,18 @@ class App {
         this.errorHandler();
     }
 
+    dbConnection(){
+        db.sequelize.authenticate()
+        .then(function(){
+            console.log('Connection has been established successfully.');
+        })
+        .then(function(){
+            console.log('DB Sync complete.');
+        })
+        .catch(function(error){
+            console.error('Unable to connect to the database: ', error);
+        });
+    }
 
     setMiddleWare (){
         // 미들웨어 셋팅
