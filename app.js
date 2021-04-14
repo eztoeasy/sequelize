@@ -42,6 +42,7 @@ class App {
         })
         .then(function(){
             console.log('DB Sync complete.');
+            // return db.sequelize.sync();
         })
         .catch(function(error){
             console.error('Unable to connect to the database: ', error);
